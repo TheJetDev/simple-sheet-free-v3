@@ -1,6 +1,6 @@
 {
   "name": "Simple Sheet Free - Calc & Note",
-  "short_name": "SimpleSheet Free",
+  "short_name": "SS Free",
   "description": "Minimalist calculator with integrated note-taking. Experience structured calculations for free.",
   "id": "/Simple-Sheet-Free/",
   "start_url": "./index.html",
