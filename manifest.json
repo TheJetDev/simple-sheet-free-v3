@@ -1,24 +1,29 @@
-{
-  "name": "Simple Sheet  - Calc & Note",
-  "short_name": "SS FREE",
-  "description": "Minimalist calculator with integrated note-taking. Experience structured calculations for free.",
-  "id": "/Simple-Sheet-Free/",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4db8ff",
-  "icons": [
-    {
-      "src": "web-app-manifest-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "web-app-manifest-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+// sw.js (Free Version)
+const CACHE_NAME = 'simple-sheet-v6';
+const urlsToCache = [
+  './',
+  'index.html',
+  'manifest.json',
+  'favicon-96x96.png', // 修正: .ico から実際の .png に変更
+  'apple-touch-icon.png',
+'web-app-manifest-192x192.png',
+  'web-app-manifest-512x512.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
+    )
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(caches.match(event.request).then(res => res || fetch(event.request)));
+});
